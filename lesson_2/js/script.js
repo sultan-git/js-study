@@ -1,3 +1,16 @@
+let money, time;
+
+function start() {
+    money = +prompt("Ваш бюджет на месяц?", "");
+    time = prompt("Введите дату в формате YYYY-MM-DD", "");
+
+    while (isNaN(money) || money == '' || money == null) {
+        money = +prompt("Ваш бюджет на месяц?", "");
+    }
+}
+
+start();
+
 // let num = 50;
 
 // if (num < 49) {
@@ -42,8 +55,7 @@
 
 //console.log(+Infinity);
 
-let money = +prompt("Ваш бюджет на месяц?", ""),
-    time = prompt("Введите дату в формате YYYY-MM-DD", "");
+
 
 let appData = {
     budget: money,
@@ -51,26 +63,30 @@ let appData = {
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: false,
+    savings: true,
 };
 
-for (let i = 0; i < 2; i++) {
-    let a = prompt("Введите обязательную статью расходов в этом месяце", ""),
-        b = +prompt("Во сколько обойдется?", "");
+function chooseExpenses() {
+    for (let i = 0; i < 2; i++) {
+        let a = prompt("Введите обязательную статью расходов в этом месяце", ""),
+            b = +prompt("Во сколько обойдется?", "");
 
-    if ((typeof (a)) === "string" && (typeof (a)) != null && (typeof (b)) != null &&
-        a != "" && b != "" && a.length < 50) {
-        console.log('done ' + i);
-        appData.expenses[a] = b;
-    } else {
-        i = i - 1;
+        if ((typeof (a)) === "string" && (typeof (a)) != null && (typeof (b)) != null &&
+            a != "" && b != "" && a.length < 50) {
+            console.log('done ' + i);
+            appData.expenses[a] = b;
+        } else {
+            i = i - 1;
+        }
     }
 }
+
+chooseExpenses();
 // let i = 0;
 // while(i<2) {
 //     let a = prompt("Введите обязательную статью расходов в этом месяце", ""),
 //         b = +prompt("Во сколько обойдется?", "");
-    
+
 //     i++;
 
 // if ((typeof (a)) === "string" && (typeof (a)) != null && (typeof (b)) != null &&
@@ -83,7 +99,7 @@ for (let i = 0; i < 2; i++) {
 
 // }
 
-appData.moneyPerDay = appData.budget / 30;
+appData.moneyPerDay = (appData.budget / 30).toFixed(1);
 alert("Ежедневный бюджет: " + appData.moneyPerDay);
 
 if (appData.moneyPerDay < 100) {
@@ -95,3 +111,15 @@ if (appData.moneyPerDay < 100) {
 } else {
     console.log('Что-то пошло не так');
 }
+
+function checkSavings() {
+    if (appData.savings == true) {
+        let save = +prompt('Какова сумма накоплений?');
+        persent = +prompt('Под какой процент?');
+
+        appData.monthIncome = save / 100 / 12 * persent;
+        alert('Доход в месяц с вашего депозита: ' + appData.monthIncome);
+    }
+}
+
+checkSavings();
